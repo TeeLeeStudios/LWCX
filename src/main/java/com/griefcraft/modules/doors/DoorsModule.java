@@ -303,7 +303,7 @@ public class DoorsModule extends JavaModule {
      * @return
      */
     private int getAutoCloseInterval() {
-        return configuration.getInt("doors.interval", 3);
+        return configuration.getInt("doors.interval", 5);
     }
 
     /**

@@ -31,6 +31,7 @@ import com.griefcraft.bukkit.EntityBlock;
 import com.griefcraft.cache.BlockCache;
 import com.griefcraft.lwc.LWC;
 import com.griefcraft.model.Action;
+import com.griefcraft.model.Flag;
 import com.griefcraft.model.LWCPlayer;
 import com.griefcraft.model.Protection;
 import com.griefcraft.scripting.JavaModule;
@@ -184,6 +185,14 @@ public class CreateModule extends JavaModule {
 
         // tell the modules that a protection was registered
         if (protection != null) {
+
+            if (isDoor(protection.getBlockId())) {
+                if (!protection.hasFlag(Flag.Type.AUTOCLOSE)) {
+                    protection.addFlag(new Flag(Flag.Type.AUTOCLOSE));
+                    protection.saveNow();
+                }
+            }
+
             // Fix the blocks that match it
             protection.removeCache();
             LWC.getInstance().getProtectionCache().addProtection(protection);
@@ -263,6 +272,16 @@ public class CreateModule extends JavaModule {
 
         lwc.sendLocale(player, "protection.create.finalize", "type",
                 lwc.getPlugin().getMessageParser().parseMessage(type));
+    }
+
+    private boolean isDoor(int blockId) {
+        BlockCache blockCache = BlockCache.getInstance();
+        String name = blockCache.getBlockType(blockId).name();
+
+        return name.endsWith("_DOOR")
+            || name.endsWith("_TRAPDOOR")
+            || name.endsWith("_GATE")
+            || name.contains("FENCE_GATE");
     }
 
 }

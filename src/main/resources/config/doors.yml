@@ -1,10 +1,10 @@
 doors:
     # Enable the opening of Iron Doors when you click on them
-    enabled: false
+    enabled: true
 
     # If true, double doors will open, presuming they are both protected
     # and you can access both
-    doubleDoors: false
+    doubleDoors: true
 
     # Actions:
     #         toggle: the door will just open if it's closed, or close if it's opened. Will not auto close.
@@ -13,4 +13,4 @@ doors:
     action: toggle
 
     # The amount of seconds after opening a door for it to close. No effect if openAndClose name is not being used.
-    interval: 3
+    interval: 5

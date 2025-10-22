@@ -42,6 +42,7 @@ import com.griefcraft.scripting.event.LWCProtectionRegisterEvent;
 import com.griefcraft.scripting.event.LWCProtectionRegistrationPostEvent;
 import com.griefcraft.sql.PhysDB;
 import com.griefcraft.util.StringUtil;
+import com.griefcraft.util.matchers.DoorHelper;
 import org.bukkit.block.Block;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Entity;
@@ -185,8 +186,7 @@ public class CreateModule extends JavaModule {
 
         // tell the modules that a protection was registered
         if (protection != null) {
-
-            if (isDoor(protection.getBlockId())) {
+            if (DoorHelper.isDoorType(protection.getBlock().getType())) {
                 if (!protection.hasFlag(Flag.Type.AUTOCLOSE)) {
                     protection.addFlag(new Flag(Flag.Type.AUTOCLOSE));
                     protection.saveNow();
@@ -272,16 +272,6 @@ public class CreateModule extends JavaModule {
 
         lwc.sendLocale(player, "protection.create.finalize", "type",
                 lwc.getPlugin().getMessageParser().parseMessage(type));
-    }
-
-    private boolean isDoor(int blockId) {
-        BlockCache blockCache = BlockCache.getInstance();
-        String name = blockCache.getBlockType(blockId).name();
-
-        return name.endsWith("_DOOR")
-            || name.endsWith("_TRAPDOOR")
-            || name.endsWith("_GATE")
-            || name.contains("FENCE_GATE");
     }
 
 }

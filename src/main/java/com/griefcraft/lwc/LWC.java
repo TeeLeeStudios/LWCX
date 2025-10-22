@@ -1780,6 +1780,7 @@ public class LWC {
         registerModule(new AdminRebuild());
         registerModule(new AdminBackup());
         registerModule(new AdminView());
+        registerModule(new AdminMigrate());
 
         // /lwc setup
         registerModule(new BaseSetupModule());
